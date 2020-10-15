@@ -20,7 +20,6 @@ function PariLine(name, value, amount, index) {
   )
 }
 
-
 class Pari extends React.Component {
 
   constructor(props) {
@@ -53,9 +52,9 @@ class Pari extends React.Component {
       <table>
       <thead>
       <tr>
-      <td>Participant</td>
-      <td>Choix</td>
-      <td>Montant</td>
+      <th>Participant</th>
+      <th>Choix</th>
+      <th>Montant</th>
       </tr>
       </thead>
       <tbody>

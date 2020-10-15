@@ -6,29 +6,20 @@ import {
   Link
 } from "react-router-dom";
 
-import {Home, About, Paris, Pari} from "./components"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
+import {Home, About, Paris, Pari, SideMenu} from "./components"
 
 
 export default function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">A propos</Link>
-            </li>
-            <li>
-              <Link to="/paris">Paris</Link>
-            </li>
-          </ul>
-        </nav>
+      <div id="outer-container">
+      <SideMenu />
+        <main id="page-wrap">
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+        <h1>Titre de mon Site</h1>
+
         <Switch>
           <Route path="/about">
             <About />
@@ -40,6 +31,8 @@ export default function App() {
             <Home />
           </Route>
         </Switch>
+        </main>
+
       </div>
     </Router>
   );
