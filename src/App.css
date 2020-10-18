@@ -59,7 +59,10 @@ a:hover, a:focus {
   text-decoration: none;
 }
 
-
+div.firebaseui-container {
+  font-size: 100%;
+  text-align: center;
+}
 
 /* Position and sizing of burger button */
 .bm-burger-button {

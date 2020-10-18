@@ -8,21 +8,33 @@ import {
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import {Home, About, Paris, Pari, SideMenu} from "./components"
+import {Home, About, Paris, Pari, SideMenu, UserPage} from "./components"
+
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import firebaseConfig from './firebaseConfig';
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+var user = firebase.auth().currentUser;
+console.log(user)
 
 
 export default function App() {
+
+
   return (
     <Router>
       <div id="outer-container">
       <SideMenu />
         <main id="page-wrap">
-
-        <h1>Titre de mon Site</h1>
-
+        <h1>Gestion de paris en ligne</h1>
         <Switch>
           <Route path="/about">
             <About />
+          </Route>
+          <Route path="/user">
+            <UserPage />
           </Route>
           <Route path="/paris">
             <Paris />
