@@ -1,8 +1,5 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link
 } from "react-router-dom";
 import Auth from "./Auth"
@@ -23,7 +20,7 @@ function Hello(props) {
 }
 
   export default function Home() {
-    var firebase = require('firebase');
+    //var firebase = require('firebase');
     var user = firebase.auth().currentUser;
     return (
       <div>

@@ -1,58 +1,71 @@
 import React from "react";
 import Pari from "./Pari"
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  useParams,
   useRouteMatch
 } from "react-router-dom";
+import * as firebase from "firebase/app";
 
+class Paris extends React.Component {
 
-export default function Paris() {
+constructor(props) {
+      super(props);
+      this.state = {betLinkList :[],placeBet:[]}
+   }
 
-  let { path, url } = useRouteMatch();
+  componentDidMount() {
+    //Get database content
+     let url = this.props.route.url;
+     var db = firebase.firestore();
+     let betLinkList = [];
+     let placedBet = [];
+     db.collection("bets").get().then((querySnapshot) => {
+       querySnapshot.forEach((doc) => {
+         let link = url + "/" + doc.id;
+         let description = doc.data().description;
+         betLinkList.push({"link":link, "description":description, "betId" : doc.id});
+         placedBet[doc.id] = doc.data().bets;
+     });
+     this.setState({betLinkList:betLinkList})
+     this.setState({placedBet:placedBet})
+   })
+ }
 
+ BetLink(link, description, betId) {
+   return(
+     <li key={link}>
+     <Link to={link}>{description}</Link>
+     </li>
+   )
+ }
+
+render() {
+  let url = this.props.route.url;
+  let path = this.props.route.path;
   return (
     <div>
     <h2>Liste des Paris</h2>
     <ul>
-      <li>
-      <Link to={`${url}/sexe`}>Sexe du bébé</Link>
-      </li>
-      <li>
-      <Link to={`${url}/taille`}>taille</Link>
-      </li>
-      <li>
-      <Link to={`${url}/NicolasVsSouris`}>Nicolas contre les souris</Link>
-      </li>
+      {this.state.betLinkList.map((bet, index) => this.BetLink(bet.link, bet.description, bet.betId))}
     </ul>
 
-
-    <Switch>
+<Switch>
   <Route exact path={path}>
-    <h3>Please select .</h3>
+      <h3>Please select .</h3>
   </Route>
   <Route path={`${path}/:betId`}>
-    <Pari />
+      <Pari placedBet={this.state.placedBet} />
   </Route>
 </Switch>
     </div>
-  )
+  )}
 }
 
-
-function Topic() {
-  // The <Route> that rendered this component has a
-  // path of `/topics/:topicId`. The `:topicId` portion
-  // of the URL indicates a placeholder that we can
-  // get from `useParams()`.
-  let { topicId } = useParams();
-
-  return (
-    <div>
-      <h3>{topicId}</h3>
-    </div>
-  );
-}
+export default (props) => (
+    <Paris
+        {...props}
+        route = {useRouteMatch()}
+    />
+);

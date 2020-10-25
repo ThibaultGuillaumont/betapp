@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -46,7 +41,7 @@ ui.start('#firebaseui-auth-container', uiConfig);
 
     return (
       <div>
-      <h2></h2>
+      <h2>Login</h2>
       <div id="firebaseui-auth-container"></div>
       <div id="loader">Loading...</div>
       </div>

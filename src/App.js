@@ -3,21 +3,29 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import {Home, About, Paris, Pari, SideMenu, UserPage} from "./components"
+import {Home, About, Paris, SideMenu, UserPage} from "./components"
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import firebaseConfig from './firebaseConfig';
 
+
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-var user = firebase.auth().currentUser;
-console.log(user)
+console.log(firebaseApp);
+//var user = firebase.auth().currentUser;
+
+//console.log(user)
+var db = firebase.firestore();
+db.collection("bets").get().then((querySnapshot) => {
+querySnapshot.forEach((doc) => {
+console.log(`${doc.id} => ${doc.data()}`);
+  });
+});
 
 
 export default function App() {
@@ -28,7 +36,8 @@ export default function App() {
       <div id="outer-container">
       <SideMenu />
         <main id="page-wrap">
-        <h1>Gestion de paris en ligne</h1>
+        <h1>Faites vos prévisions</h1>
+
         <Switch>
           <Route path="/about">
             <About />
@@ -48,9 +57,4 @@ export default function App() {
       </div>
     </Router>
   );
-}
-
-
-function Users() {
-  return <h2>Users</h2>;
 }

@@ -1,21 +1,16 @@
 import React from "react";
 import PlaceBet from "./PlaceBet"
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useRouteMatch
+  useParams
 } from "react-router-dom";
+import * as firebase from "firebase/app";
 
-
-function PariLine(name, value, amount, index) {
+function PariLine(name, value, bet, index) {
   return (
     <tr key={index}>
     <td>{name}</td>
     <td>{value}</td>
-    <td>{amount}</td>
+    <td>{bet}</td>
     </tr>
   )
 }
@@ -24,24 +19,26 @@ class Pari extends React.Component {
 
   constructor(props) {
       super(props);
-      console.log(this.props);
-      this.state = {placedBet: [
-      {name:"gilou", value:"garçon", amount:"20€"},
-      {name: "bibi", value:"garçon", amount:"40€"}]
-      }
-
-      this.newBet = this.newBet.bind(this);
-
+      this.newBet = this.newBet.bind(this)
+      placedBet:this.props.placedBet ? this.state = {placedBet:this.props.placedBet[this.props.param.betId]} : this.state = {placedBet:[]}
    }
 
-  newBet(name, value, amount) {
-      let bet = this.state.placedBet.slice();
-      bet.push({"name": name, "value":value, "amount":amount});
-      this.setState({placedBet:bet})
-      console.log(this.state.placedBet)
+  newBet(name, value, bet) {
+      let betList = this.state.placedBet.slice();
+      betList.push({"name": name, "value":value, "bet":bet});
+      this.setState({placedBet:betList})
+      //TO do : Update the database
     }
 
+    componentDidUpdate(prevProps) {
+    //If route change, update table
+  if (this.props.param.betId !== prevProps.param.betId) {
+    this.setState({placedBet:this.props.placedBet[this.props.param.betId]});
+  }
+}
+
     render() {
+
 
     //get la liste des participants aux paris
     let userID = "userID";
@@ -58,7 +55,7 @@ class Pari extends React.Component {
       </tr>
       </thead>
       <tbody>
-      {this.state.placedBet.map((bet, index) => PariLine(bet.name, bet.value, bet.amount, index))}
+      {this.state.placedBet ? this.state.placedBet.map((bet, index) => PariLine(bet.name, bet.answer, bet.value, index)): "plop"}
       </tbody>
       </table>
       <PlaceBet newBet={this.newBet} userID={userID} choix={choix} />

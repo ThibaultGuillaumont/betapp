@@ -1,13 +1,10 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useParams,
   useRouteMatch
 } from "react-router-dom";
-import Auth from "./Auth"
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -24,16 +21,16 @@ function Hello(props) {
 }
 
 export default function UserPage() {
-    var firebase = require('firebase');
     var user = firebase.auth().currentUser;
     let { uid } = useParams();
-    let { path, url } = useRouteMatch();
+    let { path } = useRouteMatch();
     return (
       <Switch>
       <Route exact path={path}>
       <h3>Yo yo yo </h3>
       </Route>
       <Route path={`${path}/:uid`}>
+      <h3>{uid}</h3>
       <Hello user={user} />
       </Route>
       </Switch>

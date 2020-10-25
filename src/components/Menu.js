@@ -5,11 +5,7 @@ import {
 } from "react-router-dom";
 
 
-export default class SideMenu extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  render() {
+export default function SideMenu() {
 return(
   <Menu pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" }>
       <Link id="home" className="menu-item" to="/">Acceuil</Link>
@@ -17,5 +13,4 @@ return(
 
       <Link id="paris" className="menu-item" to="/paris">Paris</Link>
 </Menu>)
-}
 }
