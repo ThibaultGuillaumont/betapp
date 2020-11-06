@@ -8,7 +8,6 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-
 function Hello(props) {
   console.log(props.user)
   return (<React.Fragment>
@@ -19,9 +18,7 @@ function Hello(props) {
 </React.Fragment> )
 }
 
-  export default function Home() {
-    //var firebase = require('firebase');
-    var user = firebase.auth().currentUser;
+  export default function Home({user}) {
     return (
       <div>
       {user ? <Hello user={user} /> : <Auth />}

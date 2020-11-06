@@ -29,6 +29,9 @@ class Pari extends React.Component {
       this.setState({placedBet:betList})
       //TO do : Update the database
     }
+    componentDidMount() {
+      //this.setState({placedBet:this.props.placedBet[this.props.param.betId]});
+    }
 
     componentDidUpdate(prevProps) {
     //If route change, update table
