@@ -26,12 +26,13 @@ console.log(firebaseApp);
 
 
 export default function App() {
-  const [user, initialising, error] = useAuthState(firebaseApp.auth());
+  const [user] = useAuthState(firebaseApp.auth());
   return (
     <Router>
       <div id="outer-container">
       <SideMenu />
         <main id="page-wrap">
+          <div class="main_page">
         <h1>Faites vos prévisions</h1>
         <Switch>
           <Route path="/about">
@@ -50,6 +51,7 @@ export default function App() {
             <div>What?</div>
           </Route>
         </Switch>
+        </div>
         </main>
 
       </div>

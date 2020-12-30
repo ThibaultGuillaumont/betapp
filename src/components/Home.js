@@ -3,18 +3,29 @@ import {
   Link
 } from "react-router-dom";
 import Auth from "./Auth"
-
-import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import * as firebase from "firebase/app";
+
+
+function logOut() {
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
+}
 
 function Hello(props) {
-  console.log(props.user)
   return (<React.Fragment>
     <h2>
     Hello {props.user.displayName}
   </h2>
-  <Link id="home" className="menu-item" to={"/user/" + props.user.uid} >Page utilisateur</Link>
+  <Link id="home" className="menu-item" to={"/user/" + props.user.uid} >Page utilisateur</Link><br/>
+  <Link to={"/home"} onClick={() => logOut()}>log out</Link>
+
+  <h2>Acceder aux paris</h2>
+      <Link id="paris" className="menu-item" to="/paris">Paris</Link>
 </React.Fragment> )
 }
 

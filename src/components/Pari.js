@@ -1,54 +1,53 @@
 import React from "react";
-import PlaceBet from "./PlaceBet"
+import PlaceNewBet from "./PlaceNewBet"
 import {
   useParams
 } from "react-router-dom";
 import * as firebase from "firebase/app";
 
-function PariLine(name, value, bet, index) {
+
+
+
+
+function PariLine(name, answer, bet, index) {
   return (
     <tr key={index}>
     <td>{name}</td>
-    <td>{value}</td>
+    <td>{answer}</td>
     <td>{bet}</td>
     </tr>
   )
 }
 
-class Pari extends React.Component {
-
-  constructor(props) {
-      super(props);
-      this.newBet = this.newBet.bind(this)
-      placedBet:this.props.placedBet ? this.state = {placedBet:this.props.placedBet[this.props.param.betId]} : this.state = {placedBet:[]}
-   }
-
-  newBet(name, value, bet) {
-      let betList = this.state.placedBet.slice();
-      betList.push({"name": name, "value":value, "bet":bet});
-      this.setState({placedBet:betList})
-      //TO do : Update the database
-    }
-    componentDidMount() {
-      //this.setState({placedBet:this.props.placedBet[this.props.param.betId]});
-    }
-
-    componentDidUpdate(prevProps) {
-    //If route change, update table
-  if (this.props.param.betId !== prevProps.param.betId) {
-    this.setState({placedBet:this.props.placedBet[this.props.param.betId]});
-  }
+function newBet(user, value, bet, param) {
+  //Now to save it in the database
+  //get document of bets
+  var db = firebase.firestore();
+  console.log("bets/" + param.betId + "/bets")
+  db.collection("bets/" + param.betId + "/bets").doc(user.uid).set({
+    "answer": value,
+    "name": user.displayName,
+    "value": bet
+  })
+.then(function() {
+    console.log("Document successfully written!");
+})
+.catch(function(error) {
+    console.error("Error writing document: ", error);
+});
 }
 
-    render() {
-
-
+function Pari(props)  {
     //get la liste des participants aux paris
     let userID = "userID";
-    let choix = ["garçon", "fille"]
+    let choix = [];
+    props.choix ? choix = props.choix[props.param.betId] : choix = [];
+    let placedBet = props.placedBet;
+
+
     return (
       <div>
-      <h2> {this.props.param.betId} </h2>
+      <h2>{props.description}</h2>
       <table>
       <thead>
       <tr>
@@ -58,14 +57,13 @@ class Pari extends React.Component {
       </tr>
       </thead>
       <tbody>
-      {this.state.placedBet ? this.state.placedBet.map((bet, index) => PariLine(bet.name, bet.answer, bet.value, index)): "plop"}
+      {placedBet ? placedBet.map((bet) => PariLine(bet.data.name, bet.data.answer, bet.data.value, bet.id)): "plop"}
       </tbody>
       </table>
-      <PlaceBet newBet={this.newBet} userID={userID} choix={choix} />
+      <PlaceNewBet newBet={newBet} userID={userID} choix={choix} param={props.param}/>
       </div>
   )
   }
-}
 
 export default (props) => (
     <Pari

@@ -12,7 +12,6 @@ import "firebase/firestore";
 
 
 function Hello(props) {
-  console.log(props.user)
   return (<React.Fragment>
     <h2>
     Hello {props.user.displayName}, voici ta page d'administration !

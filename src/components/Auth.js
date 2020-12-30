@@ -5,9 +5,12 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import * as firebaseui from 'firebaseui'
+import { render } from "@testing-library/react";
 
-  export default function Auth() {
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+export default class Auth extends React.Component {
+    componentDidMount() {
+      var ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth());
     var uiConfig = {
           callbacks: {
               signInSuccessWithAuthResult: function(authResult, redirectUrl) {
@@ -37,7 +40,10 @@ import * as firebaseui from 'firebaseui'
 
 ui.start('#firebaseui-auth-container', uiConfig);
 
+    }
+   
 
+    render() {
 
     return (
       <div>
@@ -47,3 +53,4 @@ ui.start('#firebaseui-auth-container', uiConfig);
       </div>
   )
   }
+}

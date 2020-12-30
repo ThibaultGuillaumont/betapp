@@ -3,8 +3,9 @@
 body {
   text-align: center;
   font-family: 'Roboto';
-  font-size: 125%
-
+  font-size: 125%;
+  width: 100%;
+  background: #b4bad2
 }
 
 div {
@@ -20,7 +21,7 @@ th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4CAF50;
+  background-color: #4c9aaf;
   color: white;
 }
 
@@ -46,8 +47,10 @@ tr:hover {background-color: #ddd;}
 min-height: 100vh;
 padding: 3em 2em;
 text-align: center;
-background: #b4bad2;
 overflow: auto;
+max-width: 1200px;
+display: flex;
+justify-content: center;
 }
 
 a {
